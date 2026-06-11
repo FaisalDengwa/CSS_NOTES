@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Element 3: The CSS Box Model</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .page-header { background: linear-gradient(135deg, #006064 0%, #0097A7 60%, #26C6DA 100%); }
+
+  /* THE BOX MODEL DIAGRAM */
+  .box-model-diagram {
+    margin: 28px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .bm-outer {
+    background: #FFF9C4;
+    border: 3px dashed #F9A825;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+  }
+  .bm-outer > .bm-label { color: #F57F17; font-weight: 800; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+  .bm-border {
+    background: #FFCCBC;
+    border: 3px solid #BF360C;
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+  }
+  .bm-border > .bm-label { color: #BF360C; font-weight: 800; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+  .bm-padding {
+    background: #DCEDC8;
+    border: 3px dashed #558B2F;
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .bm-padding > .bm-label { color: #33691E; font-weight: 800; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+  .bm-content {
+    background: #BBDEFB;
+    border: 3px solid #1565C0;
+    border-radius: 6px;
+    padding: 18px 12px;
+    color: #1565C0;
+    font-weight: 800;
+    font-size: 15px;
+  }
+  .bm-side-label {
+    font-size: 11px;
+    color: #777;
+    margin: 4px 0;
+    font-style: italic;
+  }
+
+  /* Border styles demo */
+  .border-demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin: 20px 0; }
+  .border-demo { padding: 16px; text-align: center; border-radius: 10px; background: white; }
+  .border-demo .name { font-size: 12px; font-weight: 700; color: var(--muted); margin-top: 10px; font-family: 'JetBrains Mono', monospace; }
+
+  /* Padding vs Margin visual */
+  .pm-visual { display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap; }
+  .pm-box { flex: 1; min-width: 220px; }
+  .pm-title { font-weight: 700; font-size: 14px; margin-bottom: 10px; }
+  .pm-outer-wrap { background: #E3F2FD; border-radius: 12px; padding: 16px; }
+  .pm-element { background: #1565C0; color: white; border-radius: 8px; font-size: 14px; text-align: center; font-weight: 600; }
+  .pm-outer-wrap2 { background: #E3F2FD; border-radius: 12px; padding: 4px; }
+  .pm-element2 { background: #1565C0; color: white; border-radius: 8px; font-size: 14px; text-align: center; padding: 8px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <a href="index.html" class="back-btn">← Back to All Elements</a>
+  <div class="element-badge">📦 Element 3</div>
+  <h1>Implementing the <span class="accent">Box Model</span> in CSS</h1>
+  <p class="lead">Every HTML element is a box — learn the four layers of that box.</p>
+  <div class="objective">
+    <strong>Learning Objective:</strong> By the end of this element, you will be able to explain the meaning of the CSS box model, list its main parts, and apply the box model to position and size elements on web pages.
+  </div>
+</div>
+
+<div class="content">
+  <div class="breadcrumb">
+    <a href="index.html">Unit 2</a> › Element 3: The CSS Box Model
+  </div>
+
+  <!-- ═══ WHAT IS THE BOX MODEL ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E0F7FA;">📦</div>
+      <div>
+        <h2>What is the CSS Box Model?</h2>
+        <div class="subtitle">The fundamental concept behind all CSS layout</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      In CSS, <strong>every HTML element is treated as a box</strong>. Even a simple paragraph or heading has a box around it. The <strong>CSS Box Model</strong> defines how this box is structured. Every box has <strong>four parts</strong>, starting from the inside and going outward.
+    </p>
+
+    <!-- BOX MODEL DIAGRAM -->
+    <div class="box-model-diagram">
+      <div class="bm-outer">
+        <div class="bm-label">🟡 MARGIN — space OUTSIDE the border (pushes other elements away)</div>
+        <div class="bm-border">
+          <div class="bm-label">🔴 BORDER — the line surrounding the element</div>
+          <div class="bm-padding">
+            <div class="bm-label">🟢 PADDING — space INSIDE between content and border</div>
+            <div class="bm-content">
+              🔵 CONTENT<br>
+              <span style="font-size:12px;font-weight:500;color:#1565C0;">The actual text or image</span>
+            </div>
+          </div>
+          <div class="bm-side-label">← padding space →</div>
+        </div>
+        <div class="bm-side-label">← margin space →</div>
+      </div>
+    </div>
+
+    <table class="styled-table">
+      <thead><tr><th>Part</th><th>Location</th><th>What It Does</th><th>CSS Property</th></tr></thead>
+      <tbody>
+        <tr><td>🔵 <strong>Content</strong></td><td>Innermost layer</td><td>The actual text, image, or other HTML content</td><td><code>width</code>, <code>height</code></td></tr>
+        <tr><td>🟢 <strong>Padding</strong></td><td>Between content and border</td><td>Space INSIDE the element — makes the element bigger</td><td><code>padding</code></td></tr>
+        <tr><td>🔴 <strong>Border</strong></td><td>Around the padding</td><td>The visible line around the element</td><td><code>border</code></td></tr>
+        <tr><td>🟡 <strong>Margin</strong></td><td>Outside the border</td><td>Space OUTSIDE the element — pushes other elements away</td><td><code>margin</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ CONTENT ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E3F2FD;">🔵</div>
+      <div>
+        <h2>Part 1: Content</h2>
+        <div class="subtitle">The actual text, image, or element inside the box</div>
+      </div>
+    </div>
+    <p class="explanation">The <strong>content area</strong> is where your text, image, or other HTML elements appear. You control the size of the content using <code class="inline">width</code> and <code class="inline">height</code>.</p>
+
+    <div class="code-block"><pre><span class="sel">div</span> {
+  <span class="prop">width</span>: <span class="val">300px</span>;    <span class="comment">/* content area is 300px wide */</span>
+  <span class="prop">height</span>: <span class="val">150px</span>;   <span class="comment">/* content area is 150px tall */</span>
+}</pre></div>
+  </div>
+
+  <!-- ═══ PADDING ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E8F5E9;">🟢</div>
+      <div>
+        <h2>Part 2: Padding</h2>
+        <div class="subtitle">Space INSIDE the element — between content and border</div>
+      </div>
+    </div>
+    <p class="explanation">
+      <strong>Padding</strong> adds space <em>inside</em> the border, between the content and the border. It makes the element <strong>bigger</strong> because the space is added inside. It also shows the element's background colour.
+    </p>
+
+    <div class="pm-visual">
+      <div class="pm-box">
+        <div class="pm-title" style="color:var(--red)">❌ No padding (0px)</div>
+        <div class="pm-outer-wrap" style="padding:0;">
+          <div class="pm-element" style="padding:0;">Text is squeezed!</div>
+        </div>
+      </div>
+      <div class="pm-box">
+        <div class="pm-title" style="color:var(--green)">✅ padding: 20px</div>
+        <div class="pm-outer-wrap" style="background:transparent;">
+          <div style="background:#1565C0;color:white;padding:20px;border-radius:8px;text-align:center;font-weight:600;font-size:14px;">Text has breathing room</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block"><pre><span class="sel">div</span> {
+  <span class="prop">padding</span>: <span class="val">20px</span>;            <span class="comment">/* 20px on ALL sides */</span>
+  <span class="prop">background-color</span>: <span class="val">lightgreen</span>;
+}
+
+<span class="comment">/* Or set each side separately: */</span>
+<span class="sel">div</span> {
+  <span class="prop">padding-top</span>: <span class="val">10px</span>;
+  <span class="prop">padding-right</span>: <span class="val">20px</span>;
+  <span class="prop">padding-bottom</span>: <span class="val">10px</span>;
+  <span class="prop">padding-left</span>: <span class="val">20px</span>;
+}</pre></div>
+  </div>
+
+  <!-- ═══ BORDER ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#FBE9E7;">🔴</div>
+      <div>
+        <h2>Part 3: Border</h2>
+        <div class="subtitle">The visible line surrounding the padding and content</div>
+      </div>
+    </div>
+    <p class="explanation">
+      The <strong>border</strong> is a line that goes around the padding and content. You can control its <strong>width (thickness)</strong>, <strong>style</strong> (solid, dashed, dotted), and <strong>colour</strong>.
+    </p>
+
+    <p style="font-size:15px;font-weight:600;margin-bottom:12px;color:var(--text);">Border Style Examples:</p>
+    <div class="border-demo-grid">
+      <div class="border-demo">
+        <div style="padding:14px;border:4px solid #333;border-radius:6px;">Solid</div>
+        <div class="name">border-style: solid</div>
+      </div>
+      <div class="border-demo">
+        <div style="padding:14px;border:4px dashed #E53935;border-radius:6px;">Dashed</div>
+        <div class="name">border-style: dashed</div>
+      </div>
+      <div class="border-demo">
+        <div style="padding:14px;border:4px dotted #1565C0;border-radius:6px;">Dotted</div>
+        <div class="name">border-style: dotted</div>
+      </div>
+      <div class="border-demo">
+        <div style="padding:14px;border:5px solid #333;border-radius:20px;">Rounded</div>
+        <div class="name">border-radius: 20px</div>
+      </div>
+    </div>
+
+    <div class="code-block"><pre><span class="sel">div</span> {
+  <span class="prop">border</span>: <span class="val">5px solid #333</span>;       <span class="comment">/* width, style, colour */</span>
+}
+
+<span class="comment">/* Rounded corners */</span>
+<span class="sel">div</span> {
+  <span class="prop">border</span>: <span class="val">5px solid #333</span>;
+  <span class="prop">border-radius</span>: <span class="val">10px</span>;          <span class="comment">/* rounds the corners */</span>
+}
+
+<span class="comment">/* Dashed red border */</span>
+<span class="sel">div</span> {
+  <span class="prop">border</span>: <span class="val">3px dashed red</span>;
+}</pre></div>
+
+    <div class="box box-blue">
+      <div class="box-title">📌 The border shorthand is: width style colour</div>
+      <p>Example: <code class="inline">border: 5px solid #333;</code> means: 5 pixels wide, solid line, dark grey colour.</p>
+    </div>
+  </div>
+
+  <!-- ═══ MARGIN ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#FFF8E1;">🟡</div>
+      <div>
+        <h2>Part 4: Margin</h2>
+        <div class="subtitle">Space OUTSIDE the element — pushes other elements away</div>
+      </div>
+    </div>
+    <p class="explanation">
+      <strong>Margin</strong> adds space <em>outside</em> the border, separating the element from neighbouring elements. Unlike padding, margin does <strong>NOT</strong> affect the size of the element itself.
+    </p>
+
+    <table class="styled-table">
+      <thead><tr><th>Feature</th><th>Padding</th><th>Margin</th></tr></thead>
+      <tbody>
+        <tr><td>Where is it?</td><td>Inside the border</td><td>Outside the border</td></tr>
+        <tr><td>Does it make the element bigger?</td><td>Yes</td><td>No</td></tr>
+        <tr><td>Shows background colour?</td><td>Yes</td><td>No (shows page background)</td></tr>
+        <tr><td>Purpose</td><td>Breathing room inside</td><td>Pushes away from neighbours</td></tr>
+      </tbody>
+    </table>
+
+    <div class="code-block"><pre><span class="sel">div</span> {
+  <span class="prop">margin</span>: <span class="val">30px</span>;              <span class="comment">/* 30px gap around the element */</span>
+  <span class="prop">background-color</span>: <span class="val">white</span>;
+}
+
+<span class="comment">/* Centering an element horizontally */</span>
+<span class="sel">div</span> {
+  <span class="prop">width</span>: <span class="val">50%</span>;
+  <span class="prop">margin</span>: <span class="val">auto</span>;              <span class="comment">/* auto centres the element */</span>
+  <span class="prop">background-color</span>: <span class="val">lightblue</span>;
+}</pre></div>
+  </div>
+
+  <!-- ═══ FULL EXAMPLE (STYLED BORDER) ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E0F7FA;">💻</div>
+      <div>
+        <h2>Full Example — Styled Border Box</h2>
+        <div class="subtitle">All four box model parts working together</div>
+      </div>
+    </div>
+
+    <div class="code-label">📄 HTML file (index.html)</div>
+    <div class="code-block"><pre><span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Border Style<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"styles.css"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"border-example"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;h2&gt;</span>Styled Border Example<span class="tag">&lt;/h2&gt;</span>
+      <span class="tag">&lt;p&gt;</span>This box has a styled border and rounded corners.<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre></div>
+
+    <div class="code-label">📄 CSS file (styles.css)</div>
+    <div class="code-block"><pre><span class="sel">.border-example</span> {
+  <span class="prop">border</span>: <span class="val">5px solid #333</span>;       <span class="comment">/* 5px wide, solid, dark grey */</span>
+  <span class="prop">border-radius</span>: <span class="val">10px</span>;           <span class="comment">/* rounded corners */</span>
+  <span class="prop">padding</span>: <span class="val">20px</span>;                 <span class="comment">/* space inside */</span>
+  <span class="prop">margin</span>: <span class="val">30px auto</span>;             <span class="comment">/* 30px top/bottom, centred */</span>
+  <span class="prop">background-color</span>: <span class="val">lightblue</span>;
+  <span class="prop">text-align</span>: <span class="val">center</span>;
+  <span class="prop">max-width</span>: <span class="val">400px</span>;
+}</pre></div>
+
+    <!-- Live Preview -->
+    <div style="border:3px solid var(--border);border-radius:12px;overflow:hidden;margin-top:16px;">
+      <div style="background:#E0E0E0;padding:8px 16px;font-size:12px;font-weight:700;color:#555;display:flex;align-items:center;gap:8px;">
+        <span style="width:10px;height:10px;background:#FF5F57;border-radius:50%;display:inline-block"></span>
+        <span style="width:10px;height:10px;background:#FFBD2E;border-radius:50%;display:inline-block"></span>
+        <span style="width:10px;height:10px;background:#28C840;border-radius:50%;display:inline-block"></span>
+        &nbsp; Browser Preview
+      </div>
+      <div style="background:white;padding:20px;text-align:center;">
+        <div style="border:5px solid #333;border-radius:10px;padding:20px;margin:10px auto;background:lightblue;max-width:320px;text-align:center;">
+          <h2 style="font-size:18px;margin-bottom:8px;">Styled Border Example</h2>
+          <p style="font-size:14px;">This box has a styled border and rounded corners.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PRACTICE ═══ -->
+  <div class="practice">
+    <div class="practice-title">📝 Practice Exercises — Element 3</div>
+    <ol>
+      <li>Create boxes with <strong>different padding, border styles, and margin</strong> settings. Observe how changing each value affects the layout and size of elements on a page.</li>
+      <li>Open any website in a web browser. <strong>Right-click</strong> anywhere on the page and select <strong>"Inspect"</strong> (or a similar option, depending on your browser). In the inspector tab, point your cursor over any HTML element. Describe what you observe. How does your observation relate to the CSS box model?</li>
+    </ol>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  <div class="nav-links">
+    <a href="index.html">🏠 Home</a>
+    <a href="element2.html">← Element 2</a>
+    <a href="element4.html">Element 4: Page Layout →</a>
+  </div>
+  <strong>Form Two CSS Notes</strong> &nbsp;|&nbsp; Element 3: The CSS Box Model
+</div>
+
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Element 1: Managing Colours in CSS</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .page-header { background: linear-gradient(135deg, #B71C1C 0%, #E53935 50%, #FF5722 100%); }
+
+  /* Colour swatches */
+  .swatch-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:12px; margin:20px 0; }
+  .swatch { border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.12); }
+  .swatch-color { height:70px; }
+  .swatch-label { background:white; padding:8px 10px; font-size:12px; font-weight:700; text-align:center; }
+  .swatch-label span { display:block; font-family:'JetBrains Mono',monospace; font-size:11px; color:#777; font-weight:400; margin-top:2px; }
+
+  /* RGB mixer diagram */
+  .rgb-diagram {
+    display:flex; gap:0; margin:24px 0; border-radius:16px; overflow:hidden;
+    box-shadow:0 4px 20px rgba(0,0,0,0.10);
+  }
+  .rgb-channel { flex:1; text-align:center; padding:28px 16px; color:white; }
+  .rgb-channel h3 { font-size:28px; font-weight:900; }
+  .rgb-channel p { font-size:13px; margin-top:6px; opacity:0.85; }
+  .rgb-channel .range { font-size:11px; background:rgba(255,255,255,0.2); border-radius:6px; padding:4px 8px; margin-top:10px; display:inline-block; }
+  .rgb-r { background:#C62828; }
+  .rgb-g { background:#2E7D32; }
+  .rgb-b { background:#1565C0; }
+
+  /* Hex explainer */
+  .hex-explainer {
+    display:flex; align-items:stretch; gap:0;
+    border-radius:14px; overflow:hidden; margin:20px 0;
+    border:2px solid var(--border); font-family:'JetBrains Mono',monospace;
+  }
+  .hex-part { flex:1; text-align:center; padding:18px 10px; }
+  .hex-hash { background:#263238; color:#E8F0FE; font-size:28px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .hex-rr { background:#FFEBEE; color:#C62828; }
+  .hex-gg { background:#E8F5E9; color:#2E7D32; }
+  .hex-bb { background:#E3F2FD; color:#1565C0; }
+  .hex-part big { font-size:26px; font-weight:800; display:block; }
+  .hex-part small { font-size:11px; display:block; margin-top:4px; opacity:0.7; font-family:'Inter',sans-serif; letter-spacing:0.5px; text-transform:uppercase; font-weight:600; }
+
+  /* CSS syntax diagram */
+  .syntax-box {
+    background:#1A2B45; border-radius:16px; padding:32px;
+    margin:20px 0; display:flex; flex-wrap:wrap; align-items:center; gap:0;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .syn-part { padding:10px 14px; border-radius:8px; text-align:center; margin:4px; }
+  .syn-part small { font-size:11px; display:block; margin-top:6px; font-family:'Inter',sans-serif; text-transform:uppercase; letter-spacing:1px; font-weight:600; }
+  .syn-selector { background:#CE93D8; color:#1A0030; }
+  .syn-brace    { background:transparent; color:#E8F0FE; font-size:22px; }
+  .syn-prop     { background:#80CBC4; color:#002320; }
+  .syn-colon    { background:transparent; color:#E8F0FE; font-size:18px; }
+  .syn-value    { background:#FFD54F; color:#1A1A00; }
+  .syn-semi     { background:transparent; color:#E8F0FE; font-size:18px; }
+  .syn-label    { color:#546E7A; font-size:12px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <a href="index.html" class="back-btn">← Back to All Elements</a>
+  <div class="element-badge">🎨 Element 1</div>
+  <h1>Managing <span class="accent">Colours</span> in CSS</h1>
+  <p class="lead">Learn how to use colours on web pages using CSS.</p>
+  <div class="objective">
+    <strong>Learning Objective:</strong> By the end of this element, you will be able to apply colours to web pages using CSS.
+  </div>
+</div>
+
+<div class="content">
+  <div class="breadcrumb">
+    <a href="index.html">Unit 2</a> › Element 1: Managing Colours in CSS
+  </div>
+
+  <!-- ═══ SECTION 1: CSS SYNTAX ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#FFEBEE;">🔑</div>
+      <div>
+        <h2>Key CSS Terms You Must Know First</h2>
+        <div class="subtitle">Before adding colour, understand how CSS is written</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      Every CSS rule has <strong>three parts</strong>: a <strong>selector</strong>, a <strong>property</strong>, and a <strong>value</strong>.
+      Look at this diagram carefully — it shows exactly how CSS is written:
+    </p>
+
+    <div class="syntax-box">
+      <div class="syn-part syn-selector">p <small>Selector</small></div>
+      <div class="syn-part syn-brace">{</div>
+      <div class="syn-part syn-prop">color <small>Property</small></div>
+      <div class="syn-part syn-colon">:</div>
+      <div class="syn-part syn-value">blue <small>Value</small></div>
+      <div class="syn-part syn-semi">; }</div>
+    </div>
+
+    <table class="styled-table">
+      <thead><tr><th>Term</th><th>What It Means</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Selector</strong></td><td>The HTML element you want to style</td><td><code>p</code>, <code>h1</code>, <code>div</code></td></tr>
+        <tr><td><strong>Property</strong></td><td>The feature you want to change</td><td><code>color</code>, <code>background-color</code></td></tr>
+        <tr><td><strong>Value</strong></td><td>How you want to change it</td><td><code>red</code>, <code>#FF0000</code>, <code>rgb(255,0,0)</code></td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box-blue">
+      <div class="box-title">💡 Remember</div>
+      <p>CSS stands for <strong>Cascading Style Sheets</strong>. It is always connected to your HTML file using this line inside <code class="inline">&lt;head&gt;</code>:</p>
+      <div style="margin-top:10px; font-family:'JetBrains Mono',monospace; background:#E3F2FD; padding:10px 16px; border-radius:8px; font-size:14px; color:#1565C0;">
+        &lt;link rel="stylesheet" href="styles.css"&gt;
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 2: NAMED COLOURS ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#FFEBEE;">🖌️</div>
+      <div>
+        <h2>Method 1: Named Colours</h2>
+        <div class="subtitle">The simplest way — just type the colour name in English</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      CSS understands many colour names in plain English. You just write the name and the browser knows exactly what colour to use.
+    </p>
+
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background:red"></div><div class="swatch-label">Red<span>red</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:blue"></div><div class="swatch-label">Blue<span>blue</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:green"></div><div class="swatch-label">Green<span>green</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:yellow"></div><div class="swatch-label">Yellow<span>yellow</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:orange"></div><div class="swatch-label">Orange<span>orange</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:purple"></div><div class="swatch-label">Purple<span>purple</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:pink"></div><div class="swatch-label">Pink<span>pink</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:black; border:1px solid #ddd"></div><div class="swatch-label">Black<span>black</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:white; border:1px solid #ddd"></div><div class="swatch-label">White<span>white</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:lightblue"></div><div class="swatch-label">Light Blue<span>lightblue</span></div></div>
+    </div>
+
+    <div class="code-label">📄 Example — Using named colours in HTML (inline style)</div>
+    <div class="code-block"><pre><span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"color: green;"</span><span class="tag">&gt;</span>This text is green.<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;h1</span> <span class="attr">style</span>=<span class="val">"color: red;"</span><span class="tag">&gt;</span>This heading is red.<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"background-color: yellow;"</span><span class="tag">&gt;</span>Yellow background.<span class="tag">&lt;/p&gt;</span></pre></div>
+
+    <div class="code-label">📄 Example — Using named colours in a CSS file (styles.css)</div>
+    <div class="code-block"><pre><span class="comment">/* This styles a heading element */</span>
+<span class="sel">h1</span> {
+  <span class="prop">color</span>: <span class="val">green</span>;
+  <span class="prop">background-color</span>: <span class="val">black</span>;
+}
+
+<span class="comment">/* This styles all paragraph elements */</span>
+<span class="sel">p</span> {
+  <span class="prop">color</span>: <span class="val">blue</span>;
+}</pre></div>
+  </div>
+
+  <!-- ═══ SECTION 3: HEX CODES ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#FFF8E1;">🔢</div>
+      <div>
+        <h2>Method 2: Hex Codes (Hexadecimal)</h2>
+        <div class="subtitle">More precise colours using a 6-character code</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      A <strong>hex code</strong> is a 6-character code starting with <code class="inline">#</code>. It has three pairs of characters representing <strong>Red, Green, and Blue</strong>. Values go from <strong>00</strong> (none of that colour) to <strong>FF</strong> (full amount of that colour).
+    </p>
+
+    <div class="hex-explainer">
+      <div class="hex-part hex-hash">#</div>
+      <div class="hex-part hex-rr"><big>RR</big><small>Red (00–FF)</small></div>
+      <div class="hex-part hex-gg"><big>GG</big><small>Green (00–FF)</small></div>
+      <div class="hex-part hex-bb"><big>BB</big><small>Blue (00–FF)</small></div>
+    </div>
+
+    <table class="styled-table">
+      <thead><tr><th>Colour</th><th>Hex Code</th><th>What the code means</th><th>Preview</th></tr></thead>
+      <tbody>
+        <tr><td>Pure Red</td><td><code>#FF0000</code></td><td>Full red, no green, no blue</td><td><span style="display:inline-block;width:30px;height:20px;background:#FF0000;border-radius:4px"></span></td></tr>
+        <tr><td>Pure Green</td><td><code>#00FF00</code></td><td>No red, full green, no blue</td><td><span style="display:inline-block;width:30px;height:20px;background:#00FF00;border-radius:4px"></span></td></tr>
+        <tr><td>Pure Blue</td><td><code>#0000FF</code></td><td>No red, no green, full blue</td><td><span style="display:inline-block;width:30px;height:20px;background:#0000FF;border-radius:4px"></span></td></tr>
+        <tr><td>Black</td><td><code>#000000</code></td><td>None of any colour</td><td><span style="display:inline-block;width:30px;height:20px;background:#000000;border-radius:4px"></span></td></tr>
+        <tr><td>White</td><td><code>#FFFFFF</code></td><td>Full of every colour</td><td><span style="display:inline-block;width:30px;height:20px;background:#FFFFFF;border-radius:4px;border:1px solid #ddd"></span></td></tr>
+        <tr><td>Tanzania Green</td><td><code>#1EB53A</code></td><td>Mixed red, high green, low blue</td><td><span style="display:inline-block;width:30px;height:20px;background:#1EB53A;border-radius:4px"></span></td></tr>
+        <tr><td>Dark Grey</td><td><code>#333333</code></td><td>Equal small amounts of each</td><td><span style="display:inline-block;width:30px;height:20px;background:#333333;border-radius:4px"></span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box-gold">
+      <div class="box-title">✏️ Short Hex Codes — A Quick Shortcut</div>
+      <p>When both letters in each pair are the same, you can shorten to 3 characters:</p>
+      <ul style="margin-top:10px;">
+        <li><code class="inline">#FF0000</code> → <code class="inline">#F00</code> (red)</li>
+        <li><code class="inline">#333333</code> → <code class="inline">#333</code> (dark grey)</li>
+        <li><code class="inline">#FFFFFF</code> → <code class="inline">#FFF</code> (white)</li>
+      </ul>
+    </div>
+
+    <div class="code-label">📄 Example — Hex codes in CSS</div>
+    <div class="code-block"><pre><span class="sel">h1</span> {
+  <span class="prop">color</span>: <span class="val">#FF0000</span>;           <span class="comment">/* red text */</span>
+  <span class="prop">background-color</span>: <span class="val">#000000</span>;  <span class="comment">/* black background */</span>
+}
+<span class="sel">p</span> {
+  <span class="prop">color</span>: <span class="val">#1EB53A</span>;           <span class="comment">/* Tanzania green */</span>
+  <span class="prop">background-color</span>: <span class="val">#FFF</span>;    <span class="comment">/* short hex for white */</span>
+}</pre></div>
+  </div>
+
+  <!-- ═══ SECTION 4: RGB ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E8F5E9;">🔴🟢🔵</div>
+      <div>
+        <h2>Method 3: RGB Values</h2>
+        <div class="subtitle">Mix Red, Green, Blue with numbers from 0 to 255</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      RGB means <strong>Red, Green, Blue</strong>. You mix these three colours by giving each a number from <strong>0 (none)</strong> to <strong>255 (maximum)</strong>.
+    </p>
+
+    <div class="rgb-diagram">
+      <div class="rgb-channel rgb-r">
+        <h3>R</h3>
+        <p>Red</p>
+        <div class="range">0 → 255</div>
+      </div>
+      <div class="rgb-channel rgb-g">
+        <h3>G</h3>
+        <p>Green</p>
+        <div class="range">0 → 255</div>
+      </div>
+      <div class="rgb-channel rgb-b">
+        <h3>B</h3>
+        <p>Blue</p>
+        <div class="range">0 → 255</div>
+      </div>
+    </div>
+
+    <table class="styled-table">
+      <thead><tr><th>RGB Value</th><th>Colour</th><th>Preview</th></tr></thead>
+      <tbody>
+        <tr><td><code>rgb(255, 0, 0)</code></td><td>Pure Red</td><td><span style="display:inline-block;width:30px;height:20px;background:rgb(255,0,0);border-radius:4px"></span></td></tr>
+        <tr><td><code>rgb(0, 255, 0)</code></td><td>Pure Green</td><td><span style="display:inline-block;width:30px;height:20px;background:rgb(0,255,0);border-radius:4px"></span></td></tr>
+        <tr><td><code>rgb(0, 0, 255)</code></td><td>Pure Blue</td><td><span style="display:inline-block;width:30px;height:20px;background:rgb(0,0,255);border-radius:4px"></span></td></tr>
+        <tr><td><code>rgb(255, 165, 0)</code></td><td>Orange</td><td><span style="display:inline-block;width:30px;height:20px;background:rgb(255,165,0);border-radius:4px"></span></td></tr>
+        <tr><td><code>rgb(0, 0, 0)</code></td><td>Black (all zero)</td><td><span style="display:inline-block;width:30px;height:20px;background:rgb(0,0,0);border-radius:4px"></span></td></tr>
+        <tr><td><code>rgb(255, 255, 255)</code></td><td>White (all full)</td><td><span style="display:inline-block;width:30px;height:20px;background:rgb(255,255,255);border-radius:4px;border:1px solid #ddd"></span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="code-label">📄 Example — RGB colours in CSS</div>
+    <div class="code-block"><pre><span class="sel">p</span>  { <span class="prop">color</span>: <span class="val">rgb(0, 0, 255)</span>; }      <span class="comment">/* blue text */</span>
+<span class="sel">h1</span> { <span class="prop">background-color</span>: <span class="val">rgb(255, 165, 0)</span>; } <span class="comment">/* orange background */</span></pre></div>
+  </div>
+
+  <!-- ═══ SECTION 5: FULL EXAMPLE ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E3F2FD;">💻</div>
+      <div>
+        <h2>Full Working Example — Two Files</h2>
+        <div class="subtitle">Create these two files and open index.html in your browser</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Create <code class="inline">index.html</code></h4>
+          <p>This is the HTML file with your web page content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="code-block"><pre><span class="comment">&lt;!-- index.html --&gt;</span>
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Colour Example<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"styles.css"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1&gt;</span>Welcome to Tanzania<span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Tanzania is a beautiful country.<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="val">"highlight"</span><span class="tag">&gt;</span>Mount Kilimanjaro is the highest peak in Africa.<span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre></div>
+
+    <div class="step" style="margin-top:16px;">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Create <code class="inline">styles.css</code></h4>
+        <p>This file controls all the colours. Save it in the SAME folder as index.html.</p>
+      </div>
+    </div>
+    <div class="code-block"><pre><span class="comment">/* styles.css */</span>
+
+<span class="sel">body</span> {
+  <span class="prop">background-color</span>: <span class="val">#F0FFF0</span>;   <span class="comment">/* very light green background */</span>
+}
+
+<span class="sel">h1</span> {
+  <span class="prop">color</span>: <span class="val">green</span>;                 <span class="comment">/* named colour */</span>
+  <span class="prop">background-color</span>: <span class="val">#000000</span>;   <span class="comment">/* hex code for black */</span>
+  <span class="prop">padding</span>: <span class="val">10px</span>;
+}
+
+<span class="sel">p</span> {
+  <span class="prop">color</span>: <span class="val">#1565C0</span>;               <span class="comment">/* dark blue using hex */</span>
+}
+
+<span class="sel">.highlight</span> {
+  <span class="prop">background-color</span>: <span class="val">rgb(255, 245, 157)</span>;  <span class="comment">/* light yellow using RGB */</span>
+  <span class="prop">color</span>: <span class="val">#000</span>;
+  <span class="prop">padding</span>: <span class="val">8px</span>;
+}</pre></div>
+
+    <div class="step" style="margin-top:16px;">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>What you will see</h4>
+        <p>Open index.html in a browser. The heading will be green text on black, and the last paragraph will have a yellow background.</p>
+      </div>
+    </div>
+
+    <!-- Live preview -->
+    <div style="border:3px solid var(--border);border-radius:12px;overflow:hidden;margin-top:16px;">
+      <div style="background:#E0E0E0;padding:8px 16px;font-size:12px;font-weight:700;color:#555;display:flex;align-items:center;gap:8px;">
+        <span style="width:10px;height:10px;background:#FF5F57;border-radius:50%;display:inline-block"></span>
+        <span style="width:10px;height:10px;background:#FFBD2E;border-radius:50%;display:inline-block"></span>
+        <span style="width:10px;height:10px;background:#28C840;border-radius:50%;display:inline-block"></span>
+        &nbsp; Browser Preview
+      </div>
+      <div style="background:#F0FFF0;padding:20px;">
+        <h1 style="color:green;background:#000;padding:10px;font-size:22px;">Welcome to Tanzania</h1>
+        <p style="color:#1565C0;margin-top:10px;font-size:15px;">Tanzania is a beautiful country.</p>
+        <p style="background:rgb(255,245,157);color:#000;padding:8px;margin-top:6px;font-size:15px;">Mount Kilimanjaro is the highest peak in Africa.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 6: THREE TYPES COMPARISON ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E8F5E9;">⚖️</div>
+      <div>
+        <h2>Summary: Three Ways to Write Colours</h2>
+        <div class="subtitle">When to use each method</div>
+      </div>
+    </div>
+    <table class="styled-table">
+      <thead><tr><th>Method</th><th>Example</th><th>Best For</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Named colours</strong></td><td><code>color: red;</code></td><td>Simple colours, easy to remember</td></tr>
+        <tr><td><strong>Hex codes</strong></td><td><code>color: #FF0000;</code></td><td>Exact colours (most common in professional use)</td></tr>
+        <tr><td><strong>RGB</strong></td><td><code>color: rgb(255,0,0);</code></td><td>When you want to mix colours using numbers</td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box-green">
+      <div class="box-title">✅ All three methods produce the same red colour:</div>
+      <ul>
+        <li><code class="inline">color: red;</code></li>
+        <li><code class="inline">color: #FF0000;</code></li>
+        <li><code class="inline">color: rgb(255, 0, 0);</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ PRACTICE ═══ -->
+  <div class="practice">
+    <div class="practice-title">📝 Practice Exercises — Element 1</div>
+    <ol>
+      <li>Create a web page with a <strong>dark blue background colour</strong>.</li>
+      <li>Create a web page with <strong>several paragraphs</strong>. Set the text colour of each paragraph to a different colour. Use both colour names (e.g. <code class="inline">red</code>) and hex codes (e.g. <code class="inline">#FF0000</code>).</li>
+      <li>Search for variations of the RGB colour scheme with an "A" at the end (e.g. RGBA). What does the "A" stand for? Write an HTML code with a value of RGBA.</li>
+      <li>Create a web page with a <strong>dark blue background colour</strong>.</li>
+    </ol>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  <div class="nav-links">
+    <a href="index.html">🏠 Home</a>
+    <a href="element2.html">Element 2: Typography →</a>
+  </div>
+  <strong>Form Two CSS Notes</strong> &nbsp;|&nbsp; Element 1: Managing Colours in CSS
+</div>
+
+</body>
+</html>

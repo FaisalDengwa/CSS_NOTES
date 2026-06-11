@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Element 2: Implementing Typography in CSS</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .page-header { background: linear-gradient(135deg, #4A148C 0%, #8E24AA 60%, #AB47BC 100%); }
+
+  /* Font family preview cards */
+  .font-demo-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin:20px 0; }
+  .font-demo-card { background:white; border:2px solid var(--light); border-radius:14px; padding:20px; text-align:center; }
+  .font-demo-card .sample { font-size:26px; margin-bottom:10px; color:var(--navy); }
+  .font-demo-card .name { font-size:13px; font-weight:700; color:var(--purple); }
+  .font-demo-card .tag  { font-family:'JetBrains Mono',monospace; font-size:11px; background:#F3E5F5; padding:3px 8px; border-radius:4px; color:#6A1B9A; display:inline-block; margin-top:6px; }
+
+  /* Text alignment demo */
+  .align-demo-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin:20px 0; }
+  .align-card { border:2px solid var(--light); border-radius:12px; padding:16px; }
+  .align-card .label { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  .align-card .preview { font-size:13px; color:#333; border-top:1px solid var(--light); padding-top:8px; }
+
+  /* Font size visual scale */
+  .size-scale { background:#F8FAFF; border-radius:14px; padding:24px; margin:20px 0; }
+  .size-row { display:flex; align-items:baseline; gap:16px; margin-bottom:8px; border-bottom:1px dashed var(--border); padding-bottom:8px; }
+  .size-row:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .size-label { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted); width:60px; flex-shrink:0; }
+  .size-bar { height:6px; background:var(--purple); border-radius:3px; flex-shrink:0; }
+
+  /* Typography property showcase */
+  .typo-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  @media(max-width:560px){.typo-grid{grid-template-columns:1fr;}}
+  .typo-card { background:var(--light); border-radius:12px; padding:20px; }
+  .typo-card .prop-name { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:var(--red); margin-bottom:6px; }
+  .typo-card p { font-size:14px; color:var(--muted); margin-bottom:10px; }
+  .typo-card .demo { font-size:16px; color:var(--navy); padding:8px 0; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <a href="index.html" class="back-btn">← Back to All Elements</a>
+  <div class="element-badge">✍️ Element 2</div>
+  <h1>Implementing <span class="accent">Typography</span> in CSS</h1>
+  <p class="lead">Control how text looks — font, size, colour, alignment, and spacing.</p>
+  <div class="objective">
+    <strong>Learning Objective:</strong> By the end of this element, you will be able to explain the meaning of typography and use typography techniques to make visually appealing web pages.
+  </div>
+</div>
+
+<div class="content">
+  <div class="breadcrumb">
+    <a href="index.html">Unit 2</a> › Element 2: Typography in CSS
+  </div>
+
+  <!-- ═══ WHAT IS TYPOGRAPHY ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#F3E5F5;">📖</div>
+      <div>
+        <h2>What is Typography?</h2>
+        <div class="subtitle">Understanding why text appearance matters</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      <strong>Typography</strong> refers to the style and appearance of text on a web page. It involves choosing the right <strong>font</strong>, <strong>size</strong>, <strong>colour</strong>, and <strong>spacing</strong> to make text readable and visually appealing. Good typography makes content easy to read and helps the user experience.
+    </p>
+
+    <div class="box box-purple">
+      <div class="box-title">🔑 Typography Properties in CSS</div>
+      <ul>
+        <li><code class="inline">font-family</code> — the style/shape of letters</li>
+        <li><code class="inline">font-size</code> — how big or small the text is</li>
+        <li><code class="inline">font-style</code> — normal or italic</li>
+        <li><code class="inline">color</code> — the colour of the text</li>
+        <li><code class="inline">text-align</code> — left, right, center, or justify</li>
+        <li><code class="inline">letter-spacing</code> — space between each letter</li>
+        <li><code class="inline">line-height</code> — space between lines of text</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ FONT FAMILY ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#F3E5F5;">🔤</div>
+      <div>
+        <h2>1. Font Family</h2>
+        <div class="subtitle">Choosing the shape and style of your letters</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      The <code class="inline">font-family</code> property changes the <strong>design of the letters</strong>. Think of it like choosing a pen style — some letters look like printed books, some look like newspaper text, and some look like a typewriter.
+    </p>
+
+    <div class="font-demo-grid">
+      <div class="font-demo-card">
+        <div class="sample" style="font-family:Arial,sans-serif">Tanzania</div>
+        <div class="name">Arial</div>
+        <div class="tag">sans-serif</div>
+      </div>
+      <div class="font-demo-card">
+        <div class="sample" style="font-family:'Times New Roman',serif">Tanzania</div>
+        <div class="name">Times New Roman</div>
+        <div class="tag">serif</div>
+      </div>
+      <div class="font-demo-card">
+        <div class="sample" style="font-family:'Courier New',monospace">Tanzania</div>
+        <div class="name">Courier New</div>
+        <div class="tag">monospace</div>
+      </div>
+      <div class="font-demo-card">
+        <div class="sample" style="font-family:Georgia,serif">Tanzania</div>
+        <div class="name">Georgia</div>
+        <div class="tag">serif</div>
+      </div>
+    </div>
+
+    <table class="styled-table">
+      <thead><tr><th>Font Type</th><th>What It Looks Like</th><th>Example Fonts</th></tr></thead>
+      <tbody>
+        <tr><td><strong>serif</strong></td><td>Letters have small "feet" at the tips — looks like book print</td><td>Times New Roman, Georgia</td></tr>
+        <tr><td><strong>sans-serif</strong></td><td>Clean, modern letters with no feet — easy to read on screens</td><td>Arial, Helvetica, Calibri</td></tr>
+        <tr><td><strong>monospace</strong></td><td>Every letter is the same width — looks like a typewriter</td><td>Courier New, Consolas</td></tr>
+      </tbody>
+    </table>
+
+    <div class="code-label">📄 Example — font-family in CSS</div>
+    <div class="code-block"><pre><span class="sel">body</span> {
+  <span class="prop">font-family</span>: <span class="val">Arial, sans-serif</span>;  <span class="comment">/* Arial first, then any sans-serif as backup */</span>
+}
+
+<span class="sel">h1</span> {
+  <span class="prop">font-family</span>: <span class="val">'Times New Roman', serif</span>;
+}
+
+<span class="sel">.code-text</span> {
+  <span class="prop">font-family</span>: <span class="val">'Courier New', monospace</span>;  <span class="comment">/* typewriter style */</span>
+}</pre></div>
+
+    <div class="box box-blue">
+      <div class="box-title">💡 Always Write a Backup Font</div>
+      <p>Always list a second font (like <code class="inline">sans-serif</code>) after your main font. If the first font is not available on the user's computer, the browser uses the backup font.</p>
+    </div>
+  </div>
+
+  <!-- ═══ FONT SIZE ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#EDE7F6;">📏</div>
+      <div>
+        <h2>2. Font Size</h2>
+        <div class="subtitle">Making text bigger or smaller</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      The <code class="inline">font-size</code> property controls how <strong>large or small</strong> text appears. You can use pixels (px), percentages (%), or relative units (em, rem).
+    </p>
+
+    <div class="size-scale">
+      <div class="size-row">
+        <div class="size-label">10px</div>
+        <div class="size-bar" style="width:30px"></div>
+        <span style="font-size:10px;color:#333">This text is 10px — very small</span>
+      </div>
+      <div class="size-row">
+        <div class="size-label">14px</div>
+        <div class="size-bar" style="width:50px"></div>
+        <span style="font-size:14px;color:#333">This text is 14px — small</span>
+      </div>
+      <div class="size-row">
+        <div class="size-label">16px</div>
+        <div class="size-bar" style="width:70px"></div>
+        <span style="font-size:16px;color:#333">This text is 16px — normal</span>
+      </div>
+      <div class="size-row">
+        <div class="size-label">20px</div>
+        <div class="size-bar" style="width:100px"></div>
+        <span style="font-size:20px;color:#333">This is 20px — larger</span>
+      </div>
+      <div class="size-row">
+        <div class="size-label">28px</div>
+        <div class="size-bar" style="width:140px"></div>
+        <span style="font-size:28px;color:#333;font-weight:bold">This is 28px heading</span>
+      </div>
+    </div>
+
+    <div class="code-label">📄 Example — font-size in CSS</div>
+    <div class="code-block"><pre><span class="sel">p</span>  { <span class="prop">font-size</span>: <span class="val">16px</span>; }      <span class="comment">/* 16 pixels — normal reading size */</span>
+<span class="sel">h1</span> { <span class="prop">font-size</span>: <span class="val">28px</span>; }      <span class="comment">/* large heading */</span>
+<span class="sel">h2</span> { <span class="prop">font-size</span>: <span class="val">22px</span>; }      <span class="comment">/* medium heading */</span>
+<span class="sel">small</span> { <span class="prop">font-size</span>: <span class="val">12px</span>; }  <span class="comment">/* small caption text */</span></pre></div>
+  </div>
+
+  <!-- ═══ FONT STYLE ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#EDE7F6;">〰️</div>
+      <div>
+        <h2>3. Font Style, Colour & More</h2>
+        <div class="subtitle">Italic, colour, alignment, and spacing</div>
+      </div>
+    </div>
+
+    <div class="typo-grid">
+      <div class="typo-card">
+        <div class="prop-name">font-style</div>
+        <p>Makes text normal or italic (slanted)</p>
+        <div class="demo">
+          <span style="font-style:normal">Normal text</span><br>
+          <span style="font-style:italic">Italic text</span>
+        </div>
+      </div>
+      <div class="typo-card">
+        <div class="prop-name">color</div>
+        <p>Changes the colour of the text</p>
+        <div class="demo">
+          <span style="color:green">Green text</span><br>
+          <span style="color:#1565C0">Blue hex text</span>
+        </div>
+      </div>
+      <div class="typo-card">
+        <div class="prop-name">letter-spacing</div>
+        <p>Adds space between each letter</p>
+        <div class="demo">
+          <span style="letter-spacing:0px">Normal spacing</span><br>
+          <span style="letter-spacing:3px">Wide spacing</span>
+        </div>
+      </div>
+      <div class="typo-card">
+        <div class="prop-name">line-height</div>
+        <p>Controls the space between lines</p>
+        <div class="demo" style="font-size:13px;">
+          <span style="line-height:1">Tight lines.<br>Hard to read.</span>
+          <br><br>
+          <span style="line-height:1.8">More space.<br>Easier to read.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text alignment demo -->
+    <h3 style="margin:28px 0 16px; font-size:18px; font-weight:700; color:var(--purple);">Text Alignment</h3>
+    <p class="explanation">The <code class="inline">text-align</code> property controls where text sits on the line.</p>
+
+    <div class="align-demo-grid">
+      <div class="align-card">
+        <div class="label">text-align: left</div>
+        <div class="preview" style="text-align:left">Tanzania is a beautiful country in East Africa.</div>
+      </div>
+      <div class="align-card">
+        <div class="label">text-align: center</div>
+        <div class="preview" style="text-align:center">Tanzania is a beautiful country in East Africa.</div>
+      </div>
+      <div class="align-card">
+        <div class="label">text-align: right</div>
+        <div class="preview" style="text-align:right">Tanzania is a beautiful country in East Africa.</div>
+      </div>
+      <div class="align-card">
+        <div class="label">text-align: justify</div>
+        <div class="preview" style="text-align:justify">Tanzania is a beautiful country in East Africa, known for Kilimanjaro.</div>
+      </div>
+    </div>
+
+    <div class="code-label">📄 Example — All typography properties together</div>
+    <div class="code-block"><pre><span class="sel">p</span> {
+  <span class="prop">font-style</span>: <span class="val">italic</span>;          <span class="comment">/* slanted text */</span>
+  <span class="prop">color</span>: <span class="val">blue</span>;                  <span class="comment">/* blue text */</span>
+  <span class="prop">text-align</span>: <span class="val">center</span>;          <span class="comment">/* centred */</span>
+  <span class="prop">letter-spacing</span>: <span class="val">2px</span>;         <span class="comment">/* 2px gap between letters */</span>
+  <span class="prop">line-height</span>: <span class="val">1.5</span>;            <span class="comment">/* 1.5× normal line gap */</span>
+}</pre></div>
+
+    <p style="font-size:14px;color:var(--muted);margin-top:4px;">
+      This is an example from your textbook (line 5 of Listing 1.2).
+    </p>
+  </div>
+
+  <!-- ═══ FULL EXAMPLE ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E3F2FD;">💻</div>
+      <div>
+        <h2>Full Working Example — Mount Kilimanjaro Page</h2>
+        <div class="subtitle">This example uses internal CSS inside the &lt;style&gt; tag</div>
+      </div>
+    </div>
+
+    <div class="box box-teal">
+      <div class="box-title">📌 Two ways to add CSS to HTML</div>
+      <ul>
+        <li><strong>Internal CSS:</strong> CSS written inside <code class="inline">&lt;style&gt;</code> tags in the HTML file head.</li>
+        <li><strong>External CSS:</strong> CSS written in a separate <code class="inline">.css</code> file and linked with <code class="inline">&lt;link&gt;</code>. This is the <strong>best practice</strong>.</li>
+      </ul>
+    </div>
+
+    <div class="code-label">📄 HTML file with internal CSS (internal CSS = inside &lt;style&gt; tags)</div>
+    <div class="code-block"><pre><span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Mount Kilimanjaro<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;style&gt;</span>
+      <span class="comment">/* This is internal CSS */</span>
+      <span class="sel">body</span> {
+        <span class="prop">font-family</span>: <span class="val">Arial, sans-serif</span>;
+        <span class="prop">background-color</span>: <span class="val">#F5F5F5</span>;
+      }
+      <span class="sel">h1</span> {
+        <span class="prop">text-align</span>: <span class="val">center</span>;
+        <span class="prop">color</span>: <span class="val">white</span>;
+        <span class="prop">background-color</span>: <span class="val">#333</span>;   <span class="comment">/* short hex for dark grey */</span>
+        <span class="prop">padding</span>: <span class="val">20px</span>;
+      }
+      <span class="sel">p</span> {
+        <span class="prop">font-size</span>: <span class="val">16px</span>;
+        <span class="prop">line-height</span>: <span class="val">1.6</span>;
+        <span class="prop">color</span>: <span class="val">#333</span>;
+      }
+    <span class="tag">&lt;/style&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1&gt;</span>Mount Kilimanjaro<span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;h2&gt;</span>The Peak of Africa<span class="tag">&lt;/h2&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Mount Kilimanjaro is a dormant volcano in Tanzania.
+    It is Africa's highest peak, standing at 5,895 metres.<span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre></div>
+
+    <!-- Browser Preview -->
+    <div style="border:3px solid var(--border);border-radius:12px;overflow:hidden;margin-top:16px;">
+      <div style="background:#E0E0E0;padding:8px 16px;font-size:12px;font-weight:700;color:#555;display:flex;align-items:center;gap:8px;">
+        <span style="width:10px;height:10px;background:#FF5F57;border-radius:50%;display:inline-block"></span>
+        <span style="width:10px;height:10px;background:#FFBD2E;border-radius:50%;display:inline-block"></span>
+        <span style="width:10px;height:10px;background:#28C840;border-radius:50%;display:inline-block"></span>
+        &nbsp; Browser Preview
+      </div>
+      <div style="background:#F5F5F5; padding:0 20px 20px; font-family:Arial,sans-serif;">
+        <h1 style="text-align:center;color:white;background:#333;padding:20px;font-size:24px;margin:0 -20px 16px;">Mount Kilimanjaro</h1>
+        <h2 style="font-size:18px;color:#444;margin-bottom:10px;">The Peak of Africa</h2>
+        <p style="font-size:16px;line-height:1.6;color:#333;">Mount Kilimanjaro is a dormant volcano in Tanzania. It is Africa's highest peak, standing at 5,895 metres.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ EXTERNAL CSS ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E3F2FD;">🗂️</div>
+      <div>
+        <h2>External CSS — The Best Practice</h2>
+        <div class="subtitle">Keeping your CSS in a separate file</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      <strong>External CSS</strong> means saving all your CSS in a separate file called <code class="inline">styles.css</code>. You then link it to your HTML using a <code class="inline">&lt;link&gt;</code> tag. This is the <strong>best and most professional way</strong> to write CSS.
+    </p>
+
+    <div class="code-label">📄 styles.css — the external CSS file</div>
+    <div class="code-block"><pre><span class="comment">/* Basic page styling */</span>
+<span class="sel">body</span> {
+  <span class="prop">font-family</span>: <span class="val">Arial, sans-serif</span>;
+  <span class="prop">margin</span>: <span class="val">0</span>;
+  <span class="prop">padding</span>: <span class="val">0</span>;
+}
+
+<span class="sel">.header</span> {
+  <span class="prop">background-color</span>: <span class="val">#333</span>;
+  <span class="prop">color</span>: <span class="val">white</span>;
+  <span class="prop">padding</span>: <span class="val">20px</span>;
+  <span class="prop">text-align</span>: <span class="val">center</span>;
+}
+
+<span class="sel">.content</span> {
+  <span class="prop">max-width</span>: <span class="val">1200px</span>;
+  <span class="prop">margin</span>: <span class="val">20px auto</span>;
+  <span class="prop">padding</span>: <span class="val">20px</span>;
+  <span class="prop">background-color</span>: <span class="val">#F4F4F4</span>;
+}
+
+<span class="comment">/* Responsive: on small screens, add more padding */</span>
+<span class="sel">@media (max-width: 768px)</span> {
+  <span class="sel">.header</span>  { <span class="prop">padding</span>: <span class="val">10px</span>; }
+  <span class="sel">.content</span> { <span class="prop">padding</span>: <span class="val">10px</span>; }
+}</pre></div>
+
+    <div class="box box-blue">
+      <div class="box-title">💡 Link the CSS file inside &lt;head&gt;</div>
+      <div style="font-family:'JetBrains Mono',monospace;background:#E3F2FD;padding:10px 14px;border-radius:8px;font-size:14px;color:#1565C0;margin-top:8px;">
+        &lt;link rel="stylesheet" href="styles.css"&gt;
+      </div>
+      <p style="margin-top:8px;">Both files must be in the <strong>same folder</strong> for this to work.</p>
+    </div>
+  </div>
+
+  <!-- ═══ PRACTICE ═══ -->
+  <div class="practice">
+    <div class="practice-title">📝 Practice Exercises — Element 2</div>
+    <ol>
+      <li>Create a web page with <strong>two paragraphs</strong>. Each paragraph must have a unique font type. The second paragraph must be italic.</li>
+      <li>Try different font styles, sizes, colours, and spacing on a web page. For example, change the font style of a paragraph to "Arial", increase its size to "20px", and add "2px" of letter spacing.</li>
+      <li>In a group of five, identify five major infrastructure projects developed in Tanzania over the past 10 years. Create a web page that presents a list of these projects, including essential information such as project name, location, budget, and economic impact. Format the necessary elements to ensure that the page is aesthetically appealing and easy to navigate.</li>
+    </ol>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  <div class="nav-links">
+    <a href="index.html">🏠 Home</a>
+    <a href="element1.html">← Element 1</a>
+    <a href="element3.html">Element 3: Box Model →</a>
+  </div>
+  <strong>Form Two CSS Notes</strong> &nbsp;|&nbsp; Element 2: Implementing Typography in CSS
+</div>
+
+</body>
+</html>

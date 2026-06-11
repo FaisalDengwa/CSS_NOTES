@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Two CSS Notes – Unit 2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Nunito:wght@600;700;800;900&display=swap');
+
+  :root {
+    --navy:   #0D1B2A;
+    --blue:   #1565C0;
+    --sky:    #1E88E5;
+    --teal:   #00897B;
+    --gold:   #F9A825;
+    --green:  #2E7D32;
+    --red:    #C62828;
+    --purple: #6A1B9A;
+    --white:  #FFFFFF;
+    --off:    #F5F7FA;
+    --light:  #EEF2F7;
+    --border: #D0D9E8;
+    --text:   #1A2332;
+    --muted:  #5A6A7E;
+    --code-bg:#1A2B45;
+    --code-text:#E8F0FE;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family:'Inter', sans-serif;
+    background: var(--off);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0D1B2A 0%, #1565C0 60%, #00897B 100%);
+    color: white;
+    text-align: center;
+    padding: 80px 24px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute; inset:0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-badge {
+    display:inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50px;
+    padding: 6px 20px;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-family:'Nunito', sans-serif;
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    opacity: 0.85;
+    font-weight: 400;
+  }
+  .tz-flag {
+    display:flex; justify-content:center; gap:8px; margin-bottom:40px;
+  }
+  .tz-flag span {
+    width:40px; height:40px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center; font-size:22px;
+  }
+
+  /* ── NAV CARDS ── */
+  .nav-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap:24px;
+    max-width: 1100px;
+    margin: -60px auto 0;
+    padding: 0 24px 60px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .nav-card {
+    background: white;
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 5px solid var(--blue);
+    display:block;
+  }
+  .nav-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.16); }
+  .nav-card.e1 { border-top-color: #E53935; }
+  .nav-card.e2 { border-top-color: #8E24AA; }
+  .nav-card.e3 { border-top-color: #0097A7; }
+  .nav-card.e4 { border-top-color: #F57C00; }
+  .nav-card.e5 { border-top-color: #2E7D32; }
+
+  .card-icon {
+    width:56px; height:56px; border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:28px; margin-bottom:16px;
+  }
+  .e1 .card-icon { background:#FFEBEE; }
+  .e2 .card-icon { background:#F3E5F5; }
+  .e3 .card-icon { background:#E0F7FA; }
+  .e4 .card-icon { background:#FFF3E0; }
+  .e5 .card-icon { background:#E8F5E9; }
+
+  .card-num {
+    font-size:11px; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; color:var(--muted); margin-bottom:6px;
+  }
+  .nav-card h3 { font-size:18px; font-weight:700; margin-bottom:8px; }
+  .nav-card p  { font-size:14px; color:var(--muted); line-height:1.5; }
+  .card-arrow {
+    display:flex; align-items:center; gap:6px;
+    font-size:13px; font-weight:600; color:var(--sky);
+    margin-top:20px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align:center; padding:40px 24px;
+    background: var(--navy); color:rgba(255,255,255,0.5);
+    font-size:14px;
+  }
+  .footer strong { color:rgba(255,255,255,0.85); }
+
+  /* ── INTRO SECTION ── */
+  .intro {
+    max-width:860px; margin:0 auto; padding:0 24px 60px;
+  }
+  .intro-box {
+    background:white; border-radius:20px; padding:40px;
+    box-shadow:0 2px 16px rgba(0,0,0,0.06);
+    border-left:6px solid var(--teal);
+  }
+  .intro-box h2 { font-family:'Nunito',sans-serif; font-size:24px; margin-bottom:16px; color:var(--teal); }
+  .intro-box ul { padding-left:20px; }
+  .intro-box li { margin-bottom:10px; font-size:16px; }
+  .intro-box li strong { color:var(--blue); }
+
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🇹🇿 Form Two Computer Studies</div>
+  <h1>Unit 2: Formatting Web Pages<br><span>Using CSS</span></h1>
+  <p>Complete student notes — clear explanations, visual diagrams, and examples you can try yourself.</p>
+  <div class="tz-flag">
+    <span style="background:#1EB53A">🟢</span>
+    <span style="background:#FCD116">🟡</span>
+    <span style="background:#00A3DD">🔵</span>
+    <span style="background:#000000">⚫</span>
+  </div>
+</div>
+
+<div class="nav-grid">
+  <a href="element1.html" class="nav-card e1">
+    <div class="card-icon">🎨</div>
+    <div class="card-num">Element 1</div>
+    <h3>Managing Colours in CSS</h3>
+    <p>Learn named colours, hex codes, and RGB values to add colour to any web page.</p>
+    <div class="card-arrow">Start Learning →</div>
+  </a>
+  <a href="element2.html" class="nav-card e2">
+    <div class="card-icon">✍️</div>
+    <div class="card-num">Element 2</div>
+    <h3>Implementing Typography in CSS</h3>
+    <p>Control font style, size, alignment, spacing and make your text look great.</p>
+    <div class="card-arrow">Start Learning →</div>
+  </a>
+  <a href="element3.html" class="nav-card e3">
+    <div class="card-icon">📦</div>
+    <div class="card-num">Element 3</div>
+    <h3>Implementing the Box Model in CSS</h3>
+    <p>Understand content, padding, border and margin — the four layers of every element.</p>
+    <div class="card-arrow">Start Learning →</div>
+  </a>
+  <a href="element4.html" class="nav-card e4">
+    <div class="card-icon">🗂️</div>
+    <div class="card-num">Element 4</div>
+    <h3>Implementing Page Layout Techniques</h3>
+    <p>Position elements, set sizes, and create multi-column page layouts.</p>
+    <div class="card-arrow">Start Learning →</div>
+  </a>
+  <a href="element5.html" class="nav-card e5">
+    <div class="card-icon">🖼️</div>
+    <div class="card-num">Element 5</div>
+    <h3>Implementing Graphics Using CSS</h3>
+    <p>Add background images, create gradients, and draw shapes like circles and triangles.</p>
+    <div class="card-arrow">Start Learning →</div>
+  </a>
+</div>
+
+<div class="intro">
+  <div class="intro-box">
+    <h2>📘 What is CSS?</h2>
+    <ul>
+      <li><strong>CSS</strong> stands for <strong>Cascading Style Sheets</strong>.</li>
+      <li>CSS is used to make HTML web pages look <strong>beautiful</strong>.</li>
+      <li>Without CSS, a web page looks plain and boring. With CSS, you can change colours, sizes, fonts, and layouts.</li>
+      <li>CSS is written using a simple pattern: <strong>selector { property: value; }</strong></li>
+      <li>Example: <code style="background:#EEF2F7;padding:2px 8px;border-radius:4px;font-family:monospace;color:#C62828">p { color: blue; }</code> — this makes all paragraph text blue.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Form Two CSS Notes</strong> &nbsp;|&nbsp; Unit 2: Formatting Web Pages Using CSS &nbsp;|&nbsp; Computer Studies
+</div>
+
+</body>
+</html>

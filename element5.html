@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Element 5: Implementing Graphics Using CSS</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .page-header { background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 60%, #66BB6A 100%); }
+
+  /* Background image demo */
+  .bg-demo-box {
+    border-radius:16px; overflow:hidden; margin:20px 0;
+    box-shadow:0 4px 20px rgba(0,0,0,0.15);
+  }
+  .bg-tanzania {
+    background: linear-gradient(135deg, #1EB53A 0%, #FCD116 33%, #1EB53A 33%, #1EB53A 66%, #000 66%);
+    padding:60px 30px;
+    text-align:center;
+    color:white;
+    font-size:20px;
+    font-weight:800;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+  }
+
+  /* Gradient demos */
+  .gradient-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin:20px 0; }
+  .grad-card { border-radius:14px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.12); }
+  .grad-preview { height:100px; }
+  .grad-label { background:white; padding:10px 12px; font-size:12px; font-family:'JetBrains Mono',monospace; color:#333; font-weight:500; }
+
+  /* CSS Shapes */
+  .shapes-demo {
+    background:var(--light); border-radius:16px; padding:40px 20px;
+    margin:20px 0; display:flex; justify-content:space-around;
+    align-items:center; flex-wrap:wrap; gap:24px;
+  }
+  .shape-item { text-align:center; }
+
+  /* Triangle */
+  .css-triangle {
+    width: 0; height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid #E53935;
+    margin: 0 auto 12px;
+  }
+  /* Circle */
+  .css-circle {
+    width: 100px; height: 100px;
+    background-color: #1565C0;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+  }
+  /* Sphere */
+  .css-sphere {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #ffffff, #dddddd 40%, #999999 70%, #000000);
+    margin: 0 auto 12px;
+  }
+  .shape-name { font-size:13px; font-weight:700; color:var(--muted); font-family:'JetBrains Mono',monospace; }
+
+  /* Background properties table diagram */
+  .bg-prop-diagram {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px; margin:20px 0;
+  }
+  .bg-prop-card {
+    background:white; border:2px solid var(--border); border-radius:12px;
+    padding:16px; text-align:center;
+  }
+  .bg-prop-card .prop { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--red); margin-bottom:6px; }
+  .bg-prop-card .desc { font-size:13px; color:var(--muted); }
+  .bg-prop-card .visual { font-size:28px; margin-bottom:8px; }
+
+  /* Border styles recap */
+  .border-styled-demo {
+    display:flex; gap:16px; flex-wrap:wrap; margin:20px 0;
+  }
+  .bsd { flex:1; min-width:160px; padding:14px; border-radius:10px; text-align:center; background:white; border:5px solid #333; }
+  .bsd .label { font-size:11px; font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--muted); margin-top:8px; display:block; }
+
+  /* How triangle works diagram */
+  .triangle-explain {
+    background:#1A2B45; border-radius:14px; padding:28px;
+    margin:20px 0; display:flex; align-items:center; gap:28px; flex-wrap:wrap;
+  }
+  .tri-box {
+    display:flex; gap:0; font-size:10px; font-family:'JetBrains Mono',monospace;
+  }
+  .tri-part { width:50px; height:50px; text-align:center; display:flex; align-items:center; justify-content:center; flex-direction:column; font-size:9px; border:2px solid #555; color:white; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <a href="index.html" class="back-btn">← Back to All Elements</a>
+  <div class="element-badge">🖼️ Element 5</div>
+  <h1>Implementing <span class="accent">Graphics</span> in Web Pages Using CSS</h1>
+  <p class="lead">Add background images, create gradients, and draw shapes using only CSS.</p>
+  <div class="objective">
+    <strong>Learning Objective:</strong> By the end of this element, you will be able to apply a background image to a web page, format borders, add gradients to elements, and draw shapes using CSS.
+  </div>
+</div>
+
+<div class="content">
+  <div class="breadcrumb">
+    <a href="index.html">Unit 2</a> › Element 5: Implementing Graphics Using CSS
+  </div>
+
+  <!-- ═══ INTRO ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E8F5E9;">🖼️</div>
+      <div>
+        <h2>CSS for Graphics</h2>
+        <div class="subtitle">CSS is not just for text — it can add images and draw shapes too!</div>
+      </div>
+    </div>
+    <p class="explanation">
+      CSS is used not only for styling text and layouts, but also for <strong>adding and manipulating graphics</strong> on web pages. It can be used to add a background image to a web page or any HTML element, add gradients to elements, and draw shapes and other graphical elements.
+    </p>
+
+    <div class="box box-green">
+      <div class="box-title">📌 What you will learn in this element</div>
+      <ul>
+        <li>How to add a <strong>background image</strong> to a web page using CSS</li>
+        <li>How to create smooth <strong>colour gradients</strong> (without any image)</li>
+        <li>How to draw <strong>shapes</strong> (triangle, circle, sphere) using CSS only</li>
+        <li>How to use <strong>border styles</strong> to decorate elements</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══ BACKGROUND IMAGE ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E8F5E9;">🌄</div>
+      <div>
+        <h2>Background Images</h2>
+        <div class="subtitle">Adding a photo or image as the background of an element</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      CSS can add a background <strong>image</strong> to a web page or any element. The image file must be saved in the <strong>same folder</strong> as your HTML file. Then you use the <code class="inline">background-image</code> property to apply it.
+    </p>
+
+    <div class="bg-prop-diagram">
+      <div class="bg-prop-card">
+        <div class="visual">🖼️</div>
+        <div class="prop">background-image</div>
+        <div class="desc">Sets the image file to use as background</div>
+      </div>
+      <div class="bg-prop-card">
+        <div class="visual">🔍</div>
+        <div class="prop">background-size</div>
+        <div class="desc"><strong>cover</strong> = fills entire area<br><strong>contain</strong> = fits inside</div>
+      </div>
+      <div class="bg-prop-card">
+        <div class="visual">🎯</div>
+        <div class="prop">background-position</div>
+        <div class="desc">Where to place the image (center, top, left, etc.)</div>
+      </div>
+      <div class="bg-prop-card">
+        <div class="visual">🔁</div>
+        <div class="prop">background-repeat</div>
+        <div class="desc"><strong>no-repeat</strong> = show once only<br><strong>repeat</strong> = tile the image</div>
+      </div>
+    </div>
+
+    <div class="code-label">📄 Step 1: Create index.html</div>
+    <div class="code-block"><pre><span class="comment">&lt;!-- index.html --&gt;</span>
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Background Image<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"styles.css"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"background-example"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;h2&gt;</span>The Flag of Tanzania as Background<span class="tag">&lt;/h2&gt;</span>
+      <span class="tag">&lt;p&gt;</span>This is a background image example using CSS.<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre></div>
+
+    <div class="code-label">📄 Step 2: Create styles.css (save in the SAME folder as index.html)</div>
+    <div class="code-block"><pre><span class="sel">.background-example</span> {
+  <span class="comment">/* Replace 'tanzania_flag.png' with your actual image file name */</span>
+  <span class="prop">background-image</span>: <span class="val">url('tanzania_flag.png')</span>;
+
+  <span class="prop">background-size</span>: <span class="val">cover</span>;         <span class="comment">/* image fills the whole container */</span>
+  <span class="prop">background-position</span>: <span class="val">center</span>;     <span class="comment">/* centres the image */</span>
+  <span class="prop">background-repeat</span>: <span class="val">no-repeat</span>;   <span class="comment">/* show image only once */</span>
+
+  <span class="prop">padding</span>: <span class="val">50px</span>;
+  <span class="prop">color</span>: <span class="val">white</span>;                   <span class="comment">/* text colour must contrast the background */</span>
+  <span class="prop">text-align</span>: <span class="val">center</span>;
+}</pre></div>
+
+    <div class="code-label">👁️ Preview — what the result looks like</div>
+    <div class="bg-demo-box">
+      <div class="bg-tanzania">
+        The Flag of Tanzania as Background Image<br>
+        <span style="font-size:14px;font-weight:400;opacity:0.85;display:block;margin-top:8px;">This is a background image example using CSS.</span>
+      </div>
+    </div>
+
+    <div class="box box-gold">
+      <div class="box-title">⚠️ Important — Image File Location</div>
+      <p>Save your image (e.g. <code class="inline">tanzania_flag.png</code>) in the <strong>same folder</strong> as your HTML file. Then use the file name in the <code class="inline">background-image</code> property. If the file is in a folder called "images", use <code class="inline">url('images/tanzania_flag.png')</code>.</p>
+    </div>
+  </div>
+
+  <!-- ═══ GRADIENTS ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E8F5E9;">🌈</div>
+      <div>
+        <h2>CSS Gradients</h2>
+        <div class="subtitle">Smooth colour transitions — no image file needed!</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      A <strong>gradient</strong> creates a smooth transition between two or more colours without needing an image file. There are two main types: <strong>linear gradients</strong> (straight line direction) and <strong>radial gradients</strong> (circle from the centre outward).
+    </p>
+
+    <div class="gradient-grid">
+      <div class="grad-card">
+        <div class="grad-preview" style="background:linear-gradient(to right, blue, green)"></div>
+        <div class="grad-label">to right → blue to green</div>
+      </div>
+      <div class="grad-card">
+        <div class="grad-preview" style="background:linear-gradient(to bottom, #1EB53A, #FCD116)"></div>
+        <div class="grad-label">to bottom → green to yellow</div>
+      </div>
+      <div class="grad-card">
+        <div class="grad-preview" style="background:linear-gradient(135deg, #E53935, #1565C0)"></div>
+        <div class="grad-label">135deg → red to blue</div>
+      </div>
+      <div class="grad-card">
+        <div class="grad-preview" style="background:radial-gradient(circle, #FFD54F, #E53935)"></div>
+        <div class="grad-label">radial → yellow to red</div>
+      </div>
+    </div>
+
+    <div class="code-label">📄 Linear gradient — colour goes in a straight line</div>
+    <div class="code-block"><pre><span class="sel">.gradient-example</span> {
+  <span class="comment">/* linear-gradient(direction, colour1, colour2) */</span>
+  <span class="prop">background</span>: <span class="val">linear-gradient(to right, blue, green)</span>;
+  <span class="comment">/* "to right" means the colour changes from LEFT (blue) to RIGHT (green) */</span>
+  <span class="prop">padding</span>: <span class="val">50px</span>;
+  <span class="prop">color</span>: <span class="val">white</span>;
+  <span class="prop">text-align</span>: <span class="val">center</span>;
+}</pre></div>
+
+    <div class="code-label">📄 HTML to use the gradient</div>
+    <div class="code-block"><pre><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"gradient-example"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;h2&gt;</span>Linear Gradient<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;p&gt;</span>This background transitions smoothly from blue to green.<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span></pre></div>
+
+    <div class="code-label">📄 More gradient direction options</div>
+    <div class="code-block"><pre><span class="comment">/* Directions you can use */</span>
+<span class="prop">background</span>: <span class="val">linear-gradient(to right, blue, green)</span>;    <span class="comment">/* ← left to right → */</span>
+<span class="prop">background</span>: <span class="val">linear-gradient(to bottom, blue, green)</span>;   <span class="comment">/* ↑ top to bottom ↓ */</span>
+<span class="prop">background</span>: <span class="val">linear-gradient(to left, blue, green)</span>;    <span class="comment">/* → right to left ← */</span>
+<span class="prop">background</span>: <span class="val">linear-gradient(135deg, blue, green)</span>;      <span class="comment">/* diagonal angle */</span>
+
+<span class="comment">/* Three colours */</span>
+<span class="prop">background</span>: <span class="val">linear-gradient(to right, red, yellow, green)</span>;</pre></div>
+  </div>
+
+  <!-- ═══ CSS SHAPES ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E8F5E9;">🔺🔵⚪</div>
+      <div>
+        <h2>Drawing Shapes Using CSS</h2>
+        <div class="subtitle">Triangle, circle, and sphere — no drawing app needed!</div>
+      </div>
+    </div>
+
+    <p class="explanation">
+      You can draw shapes like a <strong>triangle</strong>, <strong>circle</strong>, and <strong>sphere</strong> using only CSS — no image files and no drawing software needed!
+    </p>
+
+    <!-- Live shape demos -->
+    <div class="shapes-demo">
+      <div class="shape-item">
+        <div class="css-triangle"></div>
+        <div class="shape-name">Triangle</div>
+      </div>
+      <div class="shape-item">
+        <div class="css-circle"></div>
+        <div class="shape-name">Circle</div>
+      </div>
+      <div class="shape-item">
+        <div class="css-sphere"></div>
+        <div class="shape-name">Sphere</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:18px;font-weight:700;margin:28px 0 16px;color:var(--green);">A. Circle — border-radius: 50%</h3>
+    <p class="explanation">A circle is created by making a square element and setting <code class="inline">border-radius: 50%</code>. This rounds all four corners fully into a circle.</p>
+
+    <div class="code-block"><pre><span class="sel">.circle</span> {
+  <span class="prop">width</span>: <span class="val">100px</span>;
+  <span class="prop">height</span>: <span class="val">100px</span>;           <span class="comment">/* width MUST equal height for a perfect circle */</span>
+  <span class="prop">background-color</span>: <span class="val">#00F</span>;  <span class="comment">/* blue colour */</span>
+  <span class="prop">border-radius</span>: <span class="val">50%</span>;      <span class="comment">/* this makes it circular! */</span>
+  <span class="prop">margin</span>: <span class="val">20px auto</span>;       <span class="comment">/* centres it on the page */</span>
+}</pre></div>
+
+    <h3 style="font-size:18px;font-weight:700;margin:28px 0 16px;color:var(--red);">B. Triangle — The Border Trick</h3>
+    <p class="explanation">A triangle is made by setting the width and height to <strong>0</strong> and using the CSS border property creatively. Three of the four borders are made transparent (invisible) and one has a colour.</p>
+
+    <div class="triangle-explain">
+      <div>
+        <p style="color:#90CAF9;font-size:14px;margin-bottom:12px;">How the triangle trick works:</p>
+        <p style="color:#E8F0FE;font-size:13px;line-height:1.7;">
+          When width and height are 0, the borders meet in the middle like a star. By making the left and right borders <strong>transparent</strong> (invisible) and giving the bottom border a colour, the coloured triangle is revealed.
+        </p>
+      </div>
+      <div class="css-triangle" style="width:0;height:0;border-left:40px solid transparent;border-right:40px solid transparent;border-bottom:80px solid #E53935;flex-shrink:0;"></div>
+    </div>
+
+    <div class="code-block"><pre><span class="sel">.triangle</span> {
+  <span class="prop">width</span>: <span class="val">0</span>;                              <span class="comment">/* zero width! */</span>
+  <span class="prop">height</span>: <span class="val">0</span>;                             <span class="comment">/* zero height! */</span>
+  <span class="prop">border-left</span>: <span class="val">50px solid transparent</span>;   <span class="comment">/* invisible left side */</span>
+  <span class="prop">border-right</span>: <span class="val">50px solid transparent</span>;  <span class="comment">/* invisible right side */</span>
+  <span class="prop">border-bottom</span>: <span class="val">100px solid #f00</span>;       <span class="comment">/* RED visible bottom = triangle! */</span>
+  <span class="prop">margin</span>: <span class="val">20px auto</span>;
+}</pre></div>
+
+    <h3 style="font-size:18px;font-weight:700;margin:28px 0 16px;color:var(--muted);">C. Sphere — Circle + Radial Gradient</h3>
+    <p class="explanation">A sphere is a circle with a <strong>radial gradient</strong> applied to make it look 3D. The gradient goes from <strong>white</strong> (bright highlight) in one corner to <strong>dark grey</strong> on the opposite side.</p>
+
+    <div class="code-block"><pre><span class="sel">.sphere</span> {
+  <span class="prop">width</span>: <span class="val">200px</span>;
+  <span class="prop">height</span>: <span class="val">200px</span>;
+  <span class="prop">border-radius</span>: <span class="val">50%</span>;     <span class="comment">/* makes it a circle */</span>
+
+  <span class="comment">/* radial-gradient creates a 3D light effect */</span>
+  <span class="comment">/* The light comes from the top-left corner (30% 30%) */</span>
+  <span class="prop">background</span>: <span class="val">radial-gradient(
+    circle at 30% 30%,
+    #ffffff,       </span><span class="comment">/* bright white highlight */</span><span class="val">
+    #dddddd 40%,   </span><span class="comment">/* light grey */</span><span class="val">
+    #999999 70%,   </span><span class="comment">/* medium grey */</span><span class="val">
+    #000000        </span><span class="comment">/* dark shadow */</span><span class="val">
+  )</span>;
+
+  <span class="prop">margin</span>: <span class="val">20px auto</span>;
+}</pre></div>
+
+    <h3 style="font-size:18px;font-weight:700;margin:28px 0 16px;color:var(--navy);">Full Example — All Three Shapes Together</h3>
+
+    <div class="code-label">📄 index.html</div>
+    <div class="code-block"><pre><span class="comment">&lt;!-- index.html --&gt;</span>
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Shapes<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"styles.css"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"container"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"column"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"triangle"</span><span class="tag">&gt;&lt;/div&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"circle"</span><span class="tag">&gt;&lt;/div&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"column"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"sphere"</span><span class="tag">&gt;&lt;/div&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre></div>
+
+    <div class="code-label">📄 styles.css (Listing 1.5 from your textbook)</div>
+    <div class="code-block"><pre><span class="comment">/* styles.css */</span>
+
+<span class="sel">.container</span> {
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">justify-content</span>: <span class="val">space-around</span>;
+  <span class="prop">height</span>: <span class="val">100vh</span>;    <span class="comment">/* full viewport height */</span>
+}
+
+<span class="sel">.column</span> {
+  <span class="prop">display</span>: <span class="val">flex</span>;
+  <span class="prop">flex-direction</span>: <span class="val">column</span>;
+  <span class="prop">align-items</span>: <span class="val">center</span>;
+  <span class="prop">justify-content</span>: <span class="val">center</span>;
+  <span class="prop">gap</span>: <span class="val">20px</span>;
+}
+
+<span class="comment">/* Triangle */</span>
+<span class="sel">.triangle</span> {
+  <span class="prop">width</span>: <span class="val">0</span>;
+  <span class="prop">height</span>: <span class="val">0</span>;
+  <span class="prop">border-left</span>: <span class="val">50px solid transparent</span>;
+  <span class="prop">border-right</span>: <span class="val">50px solid transparent</span>;
+  <span class="prop">border-bottom</span>: <span class="val">100px solid #f00</span>;
+  <span class="prop">margin</span>: <span class="val">20px auto</span>;
+}
+
+<span class="comment">/* Circle */</span>
+<span class="sel">.circle</span> {
+  <span class="prop">width</span>: <span class="val">100px</span>;
+  <span class="prop">height</span>: <span class="val">100px</span>;
+  <span class="prop">background-color</span>: <span class="val">#00F</span>;
+  <span class="prop">border-radius</span>: <span class="val">50%</span>;
+  <span class="prop">margin</span>: <span class="val">20px auto</span>;
+}
+
+<span class="comment">/* Sphere */</span>
+<span class="sel">.sphere</span> {
+  <span class="prop">width</span>: <span class="val">200px</span>;
+  <span class="prop">height</span>: <span class="val">200px</span>;
+  <span class="prop">border-radius</span>: <span class="val">50%</span>;
+  <span class="prop">background</span>: <span class="val">radial-gradient(
+    circle at 30% 30%,
+    #ffffff, #dddddd 40%, #999999 70%, #000000
+  )</span>;
+  <span class="prop">box-shadow</span>: <span class="val">inset -20px -20px 30px rgba(255,255,255,0.5),
+               inset 20px 20px 40px rgba(0,0,0,0.5)</span>;
+  <span class="prop">margin</span>: <span class="val">20px auto</span>;
+}</pre></div>
+  </div>
+
+  <!-- ═══ STYLED BORDERS RECAP ═══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-icon" style="background:#E8F5E9;">🖼️</div>
+      <div>
+        <h2>Formatting Borders</h2>
+        <div class="subtitle">Various border styles you can apply to elements</div>
+      </div>
+    </div>
+    <p class="explanation">Borders can be styled in many ways to create decorative effects on elements.</p>
+
+    <div class="border-styled-demo">
+      <div class="bsd" style="border:5px solid #1565C0;">Solid<span class="label">border-style: solid</span></div>
+      <div class="bsd" style="border:5px dashed #E53935;">Dashed<span class="label">border-style: dashed</span></div>
+      <div class="bsd" style="border:5px dotted #2E7D32;">Dotted<span class="label">border-style: dotted</span></div>
+      <div class="bsd" style="border:5px solid #6A1B9A;border-radius:20px;">Rounded<span class="label">border-radius: 20px</span></div>
+    </div>
+
+    <div class="code-block"><pre><span class="comment">/* Solid border */</span>
+<span class="sel">div</span> { <span class="prop">border</span>: <span class="val">5px solid #333</span>; }
+
+<span class="comment">/* Rounded corners */</span>
+<span class="sel">div</span> {
+  <span class="prop">border</span>: <span class="val">5px solid #333</span>;
+  <span class="prop">border-radius</span>: <span class="val">10px</span>;
+  <span class="prop">padding</span>: <span class="val">20px</span>;
+  <span class="prop">background-color</span>: <span class="val">lightblue</span>;
+}</pre></div>
+  </div>
+
+  <!-- ═══ PRACTICE ═══ -->
+  <div class="practice">
+    <div class="practice-title">📝 Practice Exercises — Element 5</div>
+    <ol>
+      <li>Create a web page that uses the <strong>Tanzania flag as a background image</strong>. (Download the flag from Google Images, save it in your project folder, and link it in your CSS.)</li>
+      <li>As a web designer, create a web page that includes at least one element featuring a <strong>linear gradient background colour</strong>.</li>
+      <li>Use CSS to create a <strong>triangle, a circle, and a sphere</strong>.</li>
+      <li><em>Advanced:</em> Enhance Example 1.13 by adding <strong>rounded corners and a linear gradient</strong> background to the &lt;div&gt; element.</li>
+      <li><em>Challenge:</em> Design a complex irregular shape using CSS.</li>
+    </ol>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  <div class="nav-links">
+    <a href="index.html">🏠 Home</a>
+    <a href="element4.html">← Element 4</a>
+    <a href="index.html">🏠 Back to All Elements</a>
+  </div>
+  <strong>Form Two CSS Notes</strong> &nbsp;|&nbsp; Element 5: Implementing Graphics Using CSS
+</div>
+
+</body>
+</html>
